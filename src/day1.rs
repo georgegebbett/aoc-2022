@@ -1,4 +1,6 @@
 use std::fs;
+use crate::utils_building::utils as utils;
+
 pub fn day1() {
     let input = fs::read("./src/inputs/day1.txt").unwrap();
  
@@ -12,7 +14,7 @@ pub fn day1() {
 
     let pockets_as_i32 = elves_pockets.map(|x| {x.map(|d| {d.parse::<i32>().unwrap()})});
 
-    let mut pocket_sums = pockets_as_i32.map(|x|{x.reduce(|p, c| {p + c}).unwrap()}).collect::<Vec<i32>>();
+    let mut pocket_sums = pockets_as_i32.map(|x|{x.reduce(utils::sum_reducer).unwrap()}).collect::<Vec<i32>>();
     
     pocket_sums.sort();
 
@@ -22,7 +24,7 @@ pub fn day1() {
 
     pocket_sums.truncate(3);
 
-    let top_3_sum = pocket_sums.into_iter().reduce(|p, c| {p + c}).unwrap();
+    let top_3_sum = utils::sum_vec(pocket_sums);
 
     println!("The top 3 calorie values summed come to {:?}", top_3_sum)
 
